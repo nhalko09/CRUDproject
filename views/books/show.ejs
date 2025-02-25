@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>
+        <%= book.title %>
+    </title>
+</head>
+
+<body>
+    <%- include('../partials/_navbar.ejs') %>
+
+        <div class="show-body">
+            <div class="show-header">
+                <h1>
+                    <%= book.title %> by <%= book.author %>
+                </h1>
+                <div class="show-sidebar">
+                    <div class="show-actions">
+                        <a href="/users/<%= user._id %>/books/<%= book._id %>/edit">
+                            Edit Book
+                        </a>
+                        <form action="/users/<%= user._id %>/books/<%= book._id %>?_method=DELETE" method="POST">
+                            <button type="submit">Delete Book</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <% if (book.notes) { %>
+                <div class="show-notes">
+                    <h2>Notes:</h2>
+                    <p>
+                        <%= book.notes %>
+                    </p>
+                </div>
+                <% } %>
+
+                    <div class="show-reviews-container">
+                        <% if (book.reviews.length> 0) { %>
+                            <h2>Reviews:</h2>
+                        
+                                <% book.reviews.forEach(review=> { %>
+                                    <li><strong>Review:</strong>
+                                        <%= review.reviewText %><br>
+                                        <strong>Rating:</strong>
+                                        <%= review.rating %>/5 <br>
+                                           
+                                    </li>
+                                    <% }); %>
+                        
+                            <% } else { %>
+                                <p class="no-reviews">No reviews yet.</p>
+                                <% } %>
+                    </div>
+        </div>
+</body>
+
+</html>
